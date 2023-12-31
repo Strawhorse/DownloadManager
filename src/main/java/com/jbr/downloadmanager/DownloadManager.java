@@ -1,6 +1,8 @@
 package com.jbr.downloadmanager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -38,7 +40,6 @@ public class DownloadManager extends JFrame {
 
         JMenuItem fileExitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
         fileExitMenuItem.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 actionExit();
             }
@@ -56,12 +57,48 @@ public class DownloadManager extends JFrame {
 
         JButton addButton = new JButton("Add Download");
         addButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 actionAdd();
             }
         });
         addPanel.add(addButton);
+
+
+//        Downloads table, main section
+        tableModel = new DownloadsTableModel();
+        table = new JTable(tableModel);
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                tableSelectionChanged();
+            }
+        });
+
+
+//        only one row at a time can be selected in the interface
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+
+
+//        Progress bar as a renderer for the progress column
+        ProgressRenderer renderer = new ProgressRenderer(0, 100);
+        renderer.setStringPainted(true);
+//        show progress text
+
+
+//        set table row height enough to fit JProgressBar
+        table.setRowHeight((int) renderer.getPreferredSize().getHeight());
+
+
+//        create the downloads panel
+        JPanel downloadsPanel = new JPanel();
+        downloadsPanel.setBorder(BorderFactory.createTitledBorder("Downloads"));
+        downloadsPanel.setLayout(new BorderLayout());
+        downloadsPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+
+//        set up buttons panel at the bottom of the interface
+        JPanel buttonsPanel = new JPanel();
+        
 
 
     }
