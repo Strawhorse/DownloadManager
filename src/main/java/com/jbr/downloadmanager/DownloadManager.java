@@ -83,6 +83,7 @@ public class DownloadManager extends JFrame {
         ProgressRenderer renderer = new ProgressRenderer(0, 100);
         renderer.setStringPainted(true);
 //        show progress text
+        table.setDefaultRenderer(JProgressBar.class, renderer);
 
 
 //        set table row height enough to fit JProgressBar
@@ -98,7 +99,35 @@ public class DownloadManager extends JFrame {
 
 //        set up buttons panel at the bottom of the interface
         JPanel buttonsPanel = new JPanel();
-        
+
+        pauseButton = new JButton("Pause");
+        pauseButton.addActionListener((e) -> {
+            actionPause();
+        });
+        pauseButton.setEnabled(false);
+        buttonsPanel.add(pauseButton);
+
+        resumeButton = new JButton("Resume");
+        resumeButton.addActionListener((e)->{
+            actionResume();
+        });
+        resumeButton.setEnabled(false);
+        buttonsPanel.add(resumeButton);
+
+        cancelButton = new JButton("Resume");
+        cancelButton.addActionListener((e)->{
+            actionCancel();
+        });
+        cancelButton.setEnabled(false);
+        buttonsPanel.add(cancelButton);
+
+        clearButton = new JButton("Resume");
+        clearButton.addActionListener((e)->{
+            actionClear();
+        });
+        clearButton.setEnabled(false);
+        buttonsPanel.add(clearButton);
+
 
 
     }
