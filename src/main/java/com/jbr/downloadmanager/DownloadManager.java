@@ -97,7 +97,7 @@ public class DownloadManager extends JFrame {
         downloadsPanel.add(new JScrollPane(table), BorderLayout.CENTER);
 
 
-//        set up buttons panel at the bottom of the interface
+//        set up buttons panel (at the bottom of the interface - later)
         JPanel buttonsPanel = new JPanel();
 
         pauseButton = new JButton("Pause");
@@ -129,7 +129,24 @@ public class DownloadManager extends JFrame {
         buttonsPanel.add(clearButton);
 
 
+//        add the created panels to the display
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(addPanel, BorderLayout.NORTH);
+        getContentPane().add(downloadsPanel, BorderLayout.CENTER);
+        getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 
+
+    }
+
+    //        exiting the program when finished method
+    private void actionExit() {
+        System.exit(0);
+    }
+
+
+//    method for adding a new download
+    private void actionAdd(){
+        
     }
 
 
