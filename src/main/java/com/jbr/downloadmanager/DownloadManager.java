@@ -5,6 +5,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 
 public class DownloadManager extends JFrame {
@@ -146,8 +149,33 @@ public class DownloadManager extends JFrame {
 
 //    method for adding a new download
     private void actionAdd(){
-        
+        URL verifiedUrl = verifyUrl(addTextField.getText());
+        if(verifiedUrl!=null) {
+            tableModel.addDownload(new Download(verifiedUrl));
+            addTextField.setText("");
+//            resets the add text field
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "URL is invalid", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
+
+//    method to verify the download and return a URL
+    private URL verifyUrl(String url) throws MalformedURLException {
+//        will only allow HTTP urls
+        if(!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://")){
+            return null;
+        }
+
+//        verify the format of the URL
+        URL verifiedUrl = new URL(url);
+
+        if(verifiedUrl.getFile().length()<2) {
+            return null;
+        }
+
+        return verifiedUrl;
+    }
 
 }
