@@ -178,4 +178,52 @@ public class DownloadManager extends JFrame {
         return verifiedUrl;
     }
 
+
+//    method for when table row selection changes
+    private void tableSelectionChanged(){
+        if(selectedDownload !=null){
+            selectedDownload.deleteObserver(DownloadManager.this);
+        }
+//        to not get notifications for the download
+
+        if(!clearing) {
+            selectedDownload = tableModel.getDownload(table.getSelectedRow());
+            selectedDownload.addObserver(DownloadManager.this);
+            updateButtons();
+        }
+//        receive notifications for the download
+    }
+
+
+
+//    method to pause the selected download
+    private void actionPause(){
+        selectedDownload.pause();
+        updateButtons();
+    }
+
+
+//    method to resume the download
+    private void actionResume(){
+        selectedDownload.resume();
+        updateButtons;
+    }
+
+
+//    method to cancel the selected download
+    private void actionCancel(){
+        selectedDownload.cancel();
+        updateButtons();
+    }
+
+
+//    method to clear the selection
+    private void actionClear(){
+        clearing = true;
+        tableModel.clearDownload(table.getSelectedRow());
+        clearing = false;
+        selectedDownload = null;
+        updateButtons();
+    }
+
 }
